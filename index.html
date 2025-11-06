@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Untuk Meli ✨</title>
+<title>Untuk Meliiichuuu ✨</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
   body {
@@ -110,15 +110,15 @@
 </style>
 </head>
 <body>
-  <h1>dari Tian Untuk Meli 🌷</h1>
+  <h1>dari Tian Untuk Meli ❤️</h1>
   <p id="message">Tekan tombol jika hatimu ingin mendengar sesuatu yang lembut.</p>
-  <button id="moodBtn">💫 Lihat pesan 💫</button>
+  <button id="moodBtn">🌷 Buka Pesan 🌷</button>
 
   <!-- Musik lembut (opsional, ganti src sesuai file kamu) -->
   <audio id="bgm" src="suara.mp3" loop></audio>
 
 <script>
-const messages = [
+const allMessages = [
   "Ada sesuatu dalam dirimu yang bahkan senja pun iri melihatnya.",
   "Setiap kali angin membawa harum bunga, aku teringat pada caramu diam.",
   "Langit tak selalu biru, tapi setiap kali kusadar kau ada, warnanya kembali hidup.",
@@ -136,41 +136,56 @@ const messages = [
   "Aku tak berani berkata apa-apa, tapi setiap diamku berbisik hal yang sama: kau istimewa."
 ];
 
+// buat salinan dan acak urutan pesan
+let remaining = shuffle([...allMessages]);
+
 const btn = document.getElementById('moodBtn');
 const msg = document.getElementById('message');
 const bgm = document.getElementById('bgm');
 
-btn.addEventListener('click', () => {
-  if(bgm.paused) bgm.play();
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
 
+btn.addEventListener('click', () => {
+  if (bgm.paused) bgm.play();
+
+  // ambil pesan berikutnya
+  if (remaining.length === 0) remaining = shuffle([...allMessages]);
+  const nextMsg = remaining.shift();
+
+  // efek fade in/out
   msg.style.opacity = 0;
   setTimeout(() => {
-    const random = messages[Math.floor(Math.random() * messages.length)];
-    msg.textContent = random;
+    msg.textContent = nextMsg;
     msg.style.opacity = 1;
   }, 500);
 
   // bunga jatuh
-  for(let i=0; i<8; i++){
+  for (let i = 0; i < 8; i++) {
     const flower = document.createElement('div');
     flower.classList.add('flower');
-    flower.textContent = ['🌸','🌷','💮','❤️'][Math.floor(Math.random()*4)];
+        flower.textContent = ['🌸','🌷','💮','❤️'][Math.floor(Math.random()*4)];
     flower.style.left = Math.random() * 100 + 'vw';
-    flower.style.animationDuration = (5 + Math.random()*4) + 's';
-    flower.style.fontSize = (18 + Math.random()*16) + 'px';
+    flower.style.animationDuration = (5 + Math.random() * 4) + 's';
+    flower.style.fontSize = (18 + Math.random() * 16) + 'px';
     document.body.appendChild(flower);
-    setTimeout(()=>flower.remove(), 9000);
+    setTimeout(() => flower.remove(), 9000);
   }
 });
 
-// buat kunang-kunang berterbangan
-for(let i=0; i<25; i++){
+// kunang-kunang berterbangan
+for (let i = 0; i < 25; i++) {
   const f = document.createElement('div');
   f.classList.add('firefly');
-  f.style.left = Math.random()*100 + 'vw';
-  f.style.top = Math.random()*100 + 'vh';
-  f.style.animationDelay = Math.random()*12 + 's';
-  f.style.animationDuration = 10 + Math.random()*10 + 's';
+  f.style.left = Math.random() * 100 + 'vw';
+  f.style.top = Math.random() * 100 + 'vh';
+  f.style.animationDelay = Math.random() * 12 + 's';
+  f.style.animationDuration = 10 + Math.random() * 10 + 's';
   document.body.appendChild(f);
 }
 </script>
